@@ -48,6 +48,8 @@ def build_lens(surfaces_json):
     lens.set_aperture(aperture_type="EPD", value=10)
     lens.set_field_type(field_type="angle")
     lens.add_field(y=0)
+    lens.add_field(y=5)
+    
     lens.add_wavelength(value=0.55)
     return lens
 
