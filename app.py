@@ -61,21 +61,23 @@ def simulate():
     try:
         payload   = request.get_json(force=True)
         surfaces  = payload["surfaces"]
-
         lens = build_lens(surfaces)
 
         plots = {}
 
         # 1️⃣ Ray-trace figure
-        fig_rt = lens.draw(num_rays=10)
+        lens.draw(num_rays=10)
+        fig_rt = plt.gcf()
         plots["raytrace"] = fig_to_data_url(fig_rt)
 
         # 2️⃣ Distortion
-        fig_dist = analysis.Distortion(lens).view()
+        analysis.Distortion(lens).view()
+        fig_dist = plt.gcf()
         plots["distortion"] = fig_to_data_url(fig_dist)
 
         # 3️⃣ Ray fan
-        fig_fan = analysis.RayFan(lens).view()
+        analysis.RayFan(lens).view()
+        fig_fan = plt.gcf()
         plots["rayfan"] = fig_to_data_url(fig_fan)
 
         return jsonify({"plots": plots})
@@ -83,6 +85,7 @@ def simulate():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+
 
 
 # ---------------------------------------------------------------------
